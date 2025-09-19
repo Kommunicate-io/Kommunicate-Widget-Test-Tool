@@ -9,7 +9,12 @@ const Editor = () => {
     <Container className="editor-container">
       <Env />
       <AppId />
-      <JsonEditor />
+      <div>
+        <h3 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '500' }}>
+          Options (JavaScript with Functions Support)
+        </h3>
+        <JsonEditor />
+      </div>
       <Outlet />
     </Container>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import MonacoEditor from '@monaco-editor/react';
 import MainContext from '../../store/MainContext';
 
+// JavaScript Editor for Kommunicate options with function support
 const JsonEditor: React.FC = () => {
   const { options, updateOptions } = React.useContext(MainContext);
 
@@ -15,7 +16,7 @@ const JsonEditor: React.FC = () => {
         fontSize: 14,
         wordWrap: 'on',
       }}
-      language="json"
+      // language="javascript"
       onChange={(e) => {
         if (typeof e == 'string') {
           updateOptions(e);

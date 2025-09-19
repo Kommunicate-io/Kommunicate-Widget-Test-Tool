@@ -1,7 +1,6 @@
 import React from 'react';
 import { DEFAULT_OPTIONS, ENVIRONMENT, EnvInterface } from '../Helper/Constant';
 import Kommunicate from '../Script/kmScript';
-import Firebase from '../Script/Firebase';
 import { useSelector } from 'react-redux';
 import { RootState } from './store';
 
@@ -26,7 +25,7 @@ export const MainProvider: React.FC<MainType> = ({ children }) => {
   );
   const [appId, setAppId] = React.useState(currentEnv.appId);
   const [runScript, setRunScript] = React.useState(false);
-  const [options, setOptions] = React.useState(DEFAULT_OPTIONS); // need to convert this into string
+  const [options, setOptions] = React.useState(DEFAULT_OPTIONS); // JavaScript object string with functions support
   const { currentServer } = useSelector((state: RootState) => state.env);
 
   React.useEffect(() => {
@@ -45,9 +44,20 @@ export const MainProvider: React.FC<MainType> = ({ children }) => {
     };
 
     try {
-      opt = { ...opt, ...JSON.parse(options) };
+      // Parse JavaScript object with functions
+      // Remove comments and parse
+      const cleanOptions = options.replace(/\/\/.*$/gm, '').trim();
+      // eslint-disable-next-line no-new-func
+      const parsedOptions = new Function('return ' + cleanOptions)();
+      opt = { ...opt, ...parsedOptions };
     } catch (error) {
-      console.error(error);
+      console.error('Error parsing options:', error);
+      // Fallback to JSON parsing for backward compatibility
+      try {
+        opt = { ...opt, ...JSON.parse(options) };
+      } catch (jsonError) {
+        console.error('Error parsing options as JSON:', jsonError);
+      }
     }
     handleRunScript(true);
     Kommunicate.init(appId, opt, currentServer.value);
@@ -56,6 +66,16 @@ export const MainProvider: React.FC<MainType> = ({ children }) => {
   const updateOptions = (value: string) => {
     if (value.trim() === '') {
       value = DEFAULT_OPTIONS;
+    }
+
+    // Basic validation for JavaScript object syntax
+    try {
+      const cleanValue = value.replace(/\/\/.*$/gm, '').trim();
+      // eslint-disable-next-line no-new-func
+      new Function('return ' + cleanValue);
+    } catch (error) {
+      console.warn('Invalid JavaScript syntax in options:', error);
+      // Still allow the value to be set, but log a warning
     }
 
     setOptions(value);

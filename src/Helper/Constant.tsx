@@ -47,7 +47,10 @@ export const ENVIRONMENT: EnvInterface[] = [
 
 export const DEFAULT_OPTIONS = `{
   "popupWidget": true,
-  "automaticChatOpenOnNavigation": true
+  "automaticChatOpenOnNavigation": true,
+  "onInit": () => {
+    console.log("Kommunicate widget initialized");
+  }
 }`;
 
 export const THEME_DROPDOWN = [

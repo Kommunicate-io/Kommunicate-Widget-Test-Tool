@@ -8,7 +8,7 @@ const Header: React.FC = () => {
 
   return (
     <Style.Header theme={theme?.value}>
-      <h4>Test Tool</h4>
+      <h4>Kommunicate Widget Test Tool</h4>
       <Navbar />
     </Style.Header>
   );
