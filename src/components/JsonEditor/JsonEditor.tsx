@@ -7,23 +7,30 @@ const JsonEditor: React.FC = () => {
   const { options, updateOptions } = React.useContext(MainContext);
 
   return (
-    <MonacoEditor
-      height="450px"
-      theme="vs-dark"
-      width="100%"
-      options={{
-        minimap: { enabled: false },
-        fontSize: 14,
-        wordWrap: 'on',
-      }}
-      // language="javascript"
-      onChange={(e) => {
-        if (typeof e == 'string') {
-          updateOptions(e);
-        }
-      }}
-      value={options}
-    />
+    <div 
+      id="options-editor-container" 
+      className="options-editor-wrapper"
+      data-testid="options-editor-container"
+    >
+      <MonacoEditor
+        height="450px"
+        theme="vs-dark"
+        width="100%"
+        className="km-options"
+        options={{
+          minimap: { enabled: false },
+          fontSize: 14,
+          wordWrap: 'on',
+        }}
+        // language="javascript"
+        onChange={(e) => {
+          if (typeof e == 'string') {
+            updateOptions(e);
+          }
+        }}
+        value={options}
+      />
+    </div>
   );
 };
 

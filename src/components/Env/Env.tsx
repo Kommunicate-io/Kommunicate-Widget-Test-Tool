@@ -91,6 +91,7 @@ const Env: React.FC = () => {
       <div style={{ marginLeft: 'auto' }}>
         {' '}
         <Dropdown
+          id="region-dropdown"
           className="env-dropdown"
           options={SERVER}
           defaultValue={currentServer}

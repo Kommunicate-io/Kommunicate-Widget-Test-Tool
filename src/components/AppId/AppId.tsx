@@ -160,8 +160,9 @@ const AppId = () => {
 
   return (
     <AppIdContainer>
-      <Input type="text" onChange={onChangeHandler} value={appId} />
+      <Input id="app-id-input" type="text" onChange={onChangeHandler} value={appId} />
       <Button
+        id="run-script-button"
         onKeyDown={loading ? () => {} : onKeyPress}
         onClick={loading ? () => {} : onClickHandler}
       >

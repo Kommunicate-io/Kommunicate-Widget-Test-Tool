@@ -20,7 +20,7 @@ export interface DropdownInterface {
 
 const Dropdown: React.FC<SelectProps & { customStyle: DropdownInterface }> = ({
   defaultValue,
-  className,
+  className = '',
   options,
   customStyle,
   onChange,
@@ -28,9 +28,12 @@ const Dropdown: React.FC<SelectProps & { customStyle: DropdownInterface }> = ({
 }) => {
   const { theme } = React.useContext(ThemeContext);
 
+  // Combine default dropdown class with custom className
+  const combinedClassName = `dropdown ${className}`.trim();
+
   return (
     <StyleSelect
-      className={'dropdown' + ' ' + className}
+      className={combinedClassName}
       isblacktheme={isBlackTheme(theme)}
       isSearchable={false}
       defaultValue={defaultValue}
@@ -59,16 +62,19 @@ export default Dropdown;
 
 const DropdownIndicator: React.FC<DropdownIndicatorProps> = (props) => {
   const { theme } = React.useContext(ThemeContext);
+  const { className } = props;
   const blackBg = isBlackTheme(theme);
+  const combinedIndicatorClassName = `dropdown-svg ${className || ''}`.trim();
+  
   return (
-    <components.DropdownIndicator className="dropdown-svg" {...props}>
+    <components.DropdownIndicator className={combinedIndicatorClassName} {...props}>
       <DropdownIcon pathFill={+blackBg ? '#adbac7' : '#1c2128'} />
     </components.DropdownIndicator>
   );
 };
 
 const Option: React.FC<OptionProps> = (props) => {
-  const { cx, isDisabled, isFocused, isSelected } = props;
+  const { cx, isDisabled, isFocused, isSelected, className } = props;
   return (
     <components.Option
       className={cx(
@@ -79,6 +85,7 @@ const Option: React.FC<OptionProps> = (props) => {
           'option--is-selected': isSelected,
         },
         'dropdown',
+        className
       )}
       {...props}
     ></components.Option>
@@ -86,5 +93,7 @@ const Option: React.FC<OptionProps> = (props) => {
 };
 
 const Control: React.FC<ControlProps> = (props) => {
-  return <components.Control className="dropdown-control" {...props} />;
+  const { className } = props;
+  const combinedControlClassName = `dropdown-control ${className || ''}`.trim();
+  return <components.Control className={combinedControlClassName} {...props} />;
 };

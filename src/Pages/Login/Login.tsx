@@ -51,13 +51,14 @@ const Login = () => {
   return (
     <LoginContainer>
       <Input
+        id="email-input"
         type="email"
         value={value}
         onKeyDown={handleKeyDown}
         onChange={handleOnChange}
         placeholder="email -: abc@gmail.com"
       />
-      <Button onClick={handleOnClick}>Enter your editor</Button>
+      <Button id="login-button" onClick={handleOnClick}>Enter your editor</Button>
     </LoginContainer>
   );
 };

@@ -21,6 +21,7 @@ const Theme: React.FC = () => {
     <Style.Theme>
       <Style.IconContainer onClick={dropdownClickHandler}>
         <Dropdown
+          id="theme-dropdown"
           className="theme-dropdown"
           defaultValue={defaultValue}
           options={THEME_DROPDOWN}
